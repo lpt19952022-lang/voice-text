@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Voice to Text</title>
+</head>
+<body>
+
+<h2>🎤 Nói → Text (HTTPS)</h2>
+
+<button onclick="start()">Bắt đầu nói</button>
+<button onclick="stop()">Dừng</button>
+<br><br>
+
+<textarea id="txt" rows="10" cols="80"
+          placeholder="Nói tới đâu chữ ra tới đó..."></textarea>
+
+<script>
+if (!('webkitSpeechRecognition' in window)) {
+    alert("Trình duyệt không hỗ trợ SpeechRecognition");
+}
+
+let rec = new webkitSpeechRecognition();
+rec.lang = "vi-VN";
+rec.continuous = true;
+
+rec.onresult = function(e){
+    document.getElementById("txt").value +=
+        e.results[e.results.length - 1][0].transcript;
+};
+
+function start(){
+    rec.start();
+}
+
+function stop(){
+    rec.stop();
+}
+</script>
+
+</body>
+</html>
